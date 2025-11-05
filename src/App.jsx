@@ -1,4 +1,5 @@
 import Header from './components/Header';
+import Filters from './components/Filters';
 import StatCard from './components/StatCard';
 import ProgressChart from './components/ProgressChart';
 import Gallery from './components/Gallery';
@@ -16,6 +17,9 @@ function App() {
       <main className={`container mx-auto px-3 md:px-4 py-4 md:py-6 space-y-4 md:space-y-6 ${
         darkMode ? 'bg-black' : ''
       }`}>
+        {/* Filters */}
+        <Filters />
+        
         {/* Statistics Cards */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
           {statsData.map((stat) => (
