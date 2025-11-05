@@ -8,7 +8,7 @@ const Filters = () => {
   
   const [filters, setFilters] = useState({
     reportType: 'Hợp nhất',
-    unit: 'PVN Holding',
+    selectedUnits: [],
     year: new Date().getFullYear(),
     period: 'Quý I',
     q1Version: 'Hợp nhất Trước Kiểm toán',
@@ -16,17 +16,61 @@ const Filters = () => {
     q3Version: 'Hợp nhất Trước Kiểm toán',
     q4Version: 'Hợp nhất Sau Kiểm toán',
   });
+  
+  const [showUnitDropdown, setShowUnitDropdown] = useState(false);
 
-  const reportTypes = ['Hợp nhất', 'Riêng lẻ', 'Tổng hợp'];
-  const units = ['PVN Holding', 'PVN 1', 'PVN 2', 'PVN 3'];
-  const years = [2023, 2024, 2025, 2026];
-  const periods = ['Quý I', 'Quý II', 'Quý III', 'Quý IV', 'Năm'];
-  const versions = [
-    'Hợp nhất Trước Kiểm toán',
-    'Hợp nhất Sau Kiểm toán',
-    'Riêng lẻ Trước Kiểm toán',
-    'Riêng lẻ Sau Kiểm toán'
+  const reportTypes = ['Hợp nhất', 'Công ty Mẹ'];
+  const units = [
+    { id: 'all', name: 'Chọn tất cả' },
+    { id: 'bcc', name: 'BCC Oil vs Gas' },
+    { id: 'bsr', name: 'BSR' },
+    { id: 'butru', name: 'Bù trữ' },
+    { id: 'dqs', name: 'DQS' },
+    { id: 'ptsc', name: 'PTSC' },
+    { id: 'pvn-holding-conso', name: 'PVN Holding (Conso)' },
+    { id: 'pvoil', name: 'PVOil' },
+    { id: 'pvpower', name: 'PVPower' },
+    { id: 'pvtrans', name: 'PVTrans' },
+    { id: 'vnpoly', name: 'VNPoly' },
+    { id: 'pvep', name: 'PVEP' },
+    { id: 'pvfcco', name: 'PVFCCo' },
+    { id: 'pvgas', name: 'PVGAS' },
+    { id: 'pvmr', name: 'PVMR' },
+    { id: 'pvn-holding', name: 'PVN Holding' },
+    { id: 'pvc', name: 'PVC' },
+    { id: 'pvcfc', name: 'PVCFC' },
+    { id: 'pvchem', name: 'PVCHEM' },
+    { id: 'pvcombank', name: 'PVCombank' },
+    { id: 'pvd', name: 'PVD' },
   ];
+  const years = [2023, 2024, 2025, 2026];
+  const periods = ['Quý I', 'Quý II', 'Quý III', 'Quý IV'];
+  const versions = [
+    'Hợp nhất Sau Kiểm toán',
+    'Hợp nhất Trước Kiểm toán'
+  ];
+
+  const handleUnitToggle = (unitId) => {
+    if (unitId === 'all') {
+      if (filters.selectedUnits.length === units.length - 1) {
+        setFilters({...filters, selectedUnits: []});
+      } else {
+        const allUnitIds = units.filter(u => u.id !== 'all').map(u => u.id);
+        setFilters({...filters, selectedUnits: allUnitIds});
+      }
+    } else {
+      const newSelected = filters.selectedUnits.includes(unitId)
+        ? filters.selectedUnits.filter(id => id !== unitId)
+        : [...filters.selectedUnits, unitId];
+      setFilters({...filters, selectedUnits: newSelected});
+    }
+  };
+
+  const getUnitDisplayText = () => {
+    if (filters.selectedUnits.length === 0) return 'PVN Holding';
+    if (filters.selectedUnits.length === units.length - 1) return 'Chọn tất cả';
+    return `${filters.selectedUnits.length} đơn vị được chọn`;
+  };
 
   return (
     <div className={`rounded-lg shadow-sm transition-colors duration-300 ${
@@ -81,26 +125,50 @@ const Filters = () => {
               </select>
             </div>
 
-            {/* Đơn vị */}
-            <div>
+            {/* Đơn vị - Multi-select */}
+            <div className="relative">
               <label className={`block text-xs mb-1.5 ${
                 darkMode ? 'text-gray-400' : 'text-gray-600'
               }`}>
                 Đơn vị
               </label>
-              <select
-                value={filters.unit}
-                onChange={(e) => setFilters({...filters, unit: e.target.value})}
-                className={`w-full px-3 py-2 rounded-lg border text-sm focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors ${
+              <button
+                type="button"
+                onClick={() => setShowUnitDropdown(!showUnitDropdown)}
+                className={`w-full px-3 py-2 rounded-lg border text-sm text-left focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors flex items-center justify-between ${
                   darkMode 
                     ? 'bg-gray-800 border-gray-700 text-gray-200' 
                     : 'bg-white border-gray-300 text-gray-900'
                 }`}
               >
-                {units.map(unit => (
-                  <option key={unit} value={unit}>{unit}</option>
-                ))}
-              </select>
+                <span>{getUnitDisplayText()}</span>
+                <ChevronDown className={`h-4 w-4 transition-transform ${showUnitDropdown ? 'rotate-180' : ''}`} />
+              </button>
+              
+              {showUnitDropdown && (
+                <div className={`absolute z-50 w-full mt-1 rounded-lg border shadow-lg max-h-60 overflow-auto ${
+                  darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-300'
+                }`}>
+                  {units.map(unit => (
+                    <label
+                      key={unit.id}
+                      className={`flex items-center px-3 py-2 cursor-pointer hover:bg-opacity-50 transition-colors ${
+                        darkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-100'
+                      }`}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={unit.id === 'all' ? filters.selectedUnits.length === units.length - 1 : filters.selectedUnits.includes(unit.id)}
+                        onChange={() => handleUnitToggle(unit.id)}
+                        className="mr-2 h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
+                      />
+                      <span className={`text-sm ${darkMode ? 'text-gray-200' : 'text-gray-900'}`}>
+                        {unit.name}
+                      </span>
+                    </label>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Năm */}
