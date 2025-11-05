@@ -28,15 +28,21 @@ const Header = () => {
   }, []);
 
   return (
-    <header className="bg-green-700 text-white">
+    <header className={`text-white transition-colors duration-300 ${
+      darkMode ? 'bg-gray-900' : 'bg-green-700'
+    }`}>
       {/* Top Bar */}
-      <div className="border-b border-green-600">
+      <div className={`border-b transition-colors ${
+        darkMode ? 'border-gray-800' : 'border-green-600'
+      }`}>
         <div className="container mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center space-x-2 md:space-x-3">
             <Building2 className="h-6 w-6 md:h-8 md:w-8" />
             <div>
               <h1 className="text-base md:text-xl font-bold">W's Dashboard</h1>
-              <p className="text-[10px] md:text-xs text-green-200 hidden sm:block">Hệ thống quản lý tài chính</p>
+              <p className={`text-[10px] md:text-xs hidden sm:block transition-colors ${
+                darkMode ? 'text-gray-400' : 'text-green-200'
+              }`}>Hệ thống quản lý tài chính</p>
             </div>
           </div>
           
@@ -45,14 +51,24 @@ const Header = () => {
               <input
                 type="text"
                 placeholder="Tìm kiếm..."
-                className="pl-10 pr-4 py-2 rounded-lg bg-green-600 text-white placeholder-green-200 focus:outline-none focus:ring-2 focus:ring-green-400 w-48 lg:w-64"
+                className={`pl-10 pr-4 py-2 rounded-lg text-white focus:outline-none focus:ring-2 w-48 lg:w-64 transition-colors ${
+                  darkMode 
+                    ? 'bg-gray-800 placeholder-gray-400 focus:ring-gray-600' 
+                    : 'bg-green-600 placeholder-green-200 focus:ring-green-400'
+                }`}
               />
-              <Search className="absolute left-3 top-2.5 h-5 w-5 text-green-200" />
+              <Search className={`absolute left-3 top-2.5 h-5 w-5 transition-colors ${
+                darkMode ? 'text-gray-400' : 'text-green-200'
+              }`} />
             </div>
-            <button className="p-2 hover:bg-green-600 rounded-lg transition-colors">
+            <button className={`p-2 rounded-lg transition-colors ${
+              darkMode ? 'hover:bg-gray-800' : 'hover:bg-green-600'
+            }`}>
               <Search className="h-5 w-5 md:hidden" />
             </button>
-            <button className="p-2 hover:bg-green-600 rounded-lg transition-colors">
+            <button className={`p-2 rounded-lg transition-colors ${
+              darkMode ? 'hover:bg-gray-800' : 'hover:bg-green-600'
+            }`}>
               <Bell className="h-4 w-4 md:h-5 md:w-5" />
             </button>
             
@@ -60,7 +76,9 @@ const Header = () => {
             <div className="relative" ref={userMenuRef}>
               <button 
                 onClick={() => setShowUserMenu(!showUserMenu)}
-                className="p-2 hover:bg-green-600 rounded-lg transition-colors"
+                className={`p-2 rounded-lg transition-colors ${
+                  darkMode ? 'hover:bg-gray-800' : 'hover:bg-green-600'
+                }`}
               >
                 <User className="h-4 w-4 md:h-5 md:w-5" />
               </button>
@@ -129,8 +147,10 @@ const Header = () => {
           {navItems.map((item, index) => (
             <li key={index}>
               <button
-                className={`px-2 md:px-4 py-2 md:py-3 text-[10px] md:text-sm font-medium whitespace-nowrap hover:bg-green-600 transition-colors ${
-                  index === 0 ? 'bg-green-600 border-b-2 border-white' : ''
+                className={`px-2 md:px-4 py-2 md:py-3 text-[10px] md:text-sm font-medium whitespace-nowrap transition-colors ${
+                  darkMode 
+                    ? `hover:bg-gray-800 ${index === 0 ? 'bg-gray-800 border-b-2 border-gray-400' : ''}`
+                    : `hover:bg-green-600 ${index === 0 ? 'bg-green-600 border-b-2 border-white' : ''}`
                 }`}
               >
                 {item}
