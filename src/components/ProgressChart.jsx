@@ -2,30 +2,30 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 
 const ProgressChart = ({ data }) => {
   return (
-    <div className="bg-white rounded-lg p-6 shadow-sm">
-      <h3 className="text-lg font-semibold text-gray-800 mb-4">
+    <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm">
+      <h3 className="text-base md:text-lg font-semibold text-gray-800 mb-3 md:mb-4">
         Biểu đồ tiến độ thi công
       </h3>
       
-      <ResponsiveContainer width="100%" height={300}>
-        <LineChart data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+      <ResponsiveContainer width="100%" height={250} className="md:h-[300px]">
+        <LineChart data={data} margin={{ top: 5, right: 10, left: 0, bottom: 5 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
           <XAxis 
             dataKey="month" 
             stroke="#6b7280"
-            style={{ fontSize: '12px' }}
+            style={{ fontSize: '10px' }}
           />
           <YAxis 
             stroke="#6b7280"
-            style={{ fontSize: '12px' }}
-            label={{ value: 'Tiến độ (%)', angle: -90, position: 'insideLeft' }}
+            style={{ fontSize: '10px' }}
+            label={{ value: 'Tiến độ (%)', angle: -90, position: 'insideLeft', style: { fontSize: '10px' } }}
           />
           <Tooltip 
             contentStyle={{ 
               backgroundColor: '#fff', 
               border: '1px solid #e5e7eb',
               borderRadius: '8px',
-              fontSize: '12px'
+              fontSize: '10px'
             }}
           />
           <Line 
@@ -33,8 +33,8 @@ const ProgressChart = ({ data }) => {
             dataKey="value" 
             stroke="#16a34a" 
             strokeWidth={2}
-            dot={{ fill: '#16a34a', r: 4 }}
-            activeDot={{ r: 6 }}
+            dot={{ fill: '#16a34a', r: 3 }}
+            activeDot={{ r: 5 }}
           />
         </LineChart>
       </ResponsiveContainer>

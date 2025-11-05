@@ -10,16 +10,16 @@ function App() {
     <div className="min-h-screen bg-gray-50">
       <Header />
       
-      <main className="container mx-auto px-4 py-6 space-y-6">
+      <main className="container mx-auto px-3 md:px-4 py-4 md:py-6 space-y-4 md:space-y-6">
         {/* Statistics Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
           {statsData.map((stat) => (
             <StatCard key={stat.id} {...stat} />
           ))}
         </div>
 
         {/* Chart and Gallery Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
           <div className="lg:col-span-2">
             <ProgressChart data={chartData} />
           </div>
@@ -33,9 +33,9 @@ function App() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-white border-t border-gray-200 mt-12">
-        <div className="container mx-auto px-4 py-6">
-          <p className="text-center text-sm text-gray-600">
+      <footer className="bg-white border-t border-gray-200 mt-8 md:mt-12">
+        <div className="container mx-auto px-3 md:px-4 py-4 md:py-6">
+          <p className="text-center text-xs md:text-sm text-gray-600">
             © 2025 W's Dashboard. All rights reserved.
           </p>
         </div>
