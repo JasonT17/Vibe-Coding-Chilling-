@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { ChevronDown, Filter } from 'lucide-react';
 import { useDarkMode } from '../context/DarkModeContext';
 
 const Filters = () => {
   const { darkMode } = useDarkMode();
   const [isExpanded, setIsExpanded] = useState(true);
+  const unitDropdownRef = useRef(null);
   
   const [filters, setFilters] = useState({
     reportType: 'Hợp nhất',
@@ -18,6 +19,23 @@ const Filters = () => {
   });
   
   const [showUnitDropdown, setShowUnitDropdown] = useState(false);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (unitDropdownRef.current && !unitDropdownRef.current.contains(event.target)) {
+        setShowUnitDropdown(false);
+      }
+    };
+
+    if (showUnitDropdown) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showUnitDropdown]);
 
   const reportTypes = ['Hợp nhất', 'Công ty Mẹ'];
   const units = [
@@ -126,7 +144,7 @@ const Filters = () => {
             </div>
 
             {/* Đơn vị - Multi-select */}
-            <div className="relative">
+            <div className="relative" ref={unitDropdownRef}>
               <label className={`block text-xs mb-1.5 ${
                 darkMode ? 'text-gray-400' : 'text-gray-600'
               }`}>
@@ -146,19 +164,39 @@ const Filters = () => {
               </button>
               
               {showUnitDropdown && (
-                <div className={`absolute z-50 w-full mt-1 rounded-lg border shadow-lg max-h-60 overflow-auto ${
+                <div className={`absolute z-50 w-full mt-1 rounded-lg border shadow-lg max-h-60 overflow-y-auto ${
                   darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-300'
                 }`}>
-                  {units.map(unit => (
+                  {/* Chọn tất cả - Sticky */}
+                  <label
+                    className={`sticky top-0 z-10 flex items-center px-3 py-2.5 cursor-pointer border-b transition-colors ${
+                      darkMode 
+                        ? 'bg-gray-800 hover:bg-gray-700 border-gray-700' 
+                        : 'bg-white hover:bg-gray-100 border-gray-200'
+                    }`}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={filters.selectedUnits.length === units.length - 1}
+                      onChange={() => handleUnitToggle('all')}
+                      className="mr-2 h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
+                    />
+                    <span className={`text-sm font-medium ${darkMode ? 'text-gray-200' : 'text-gray-900'}`}>
+                      Chọn tất cả
+                    </span>
+                  </label>
+                  
+                  {/* Other units */}
+                  {units.slice(1).map(unit => (
                     <label
                       key={unit.id}
-                      className={`flex items-center px-3 py-2 cursor-pointer hover:bg-opacity-50 transition-colors ${
+                      className={`flex items-center px-3 py-2 cursor-pointer transition-colors ${
                         darkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-100'
                       }`}
                     >
                       <input
                         type="checkbox"
-                        checked={unit.id === 'all' ? filters.selectedUnits.length === units.length - 1 : filters.selectedUnits.includes(unit.id)}
+                        checked={filters.selectedUnits.includes(unit.id)}
                         onChange={() => handleUnitToggle(unit.id)}
                         className="mr-2 h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
                       />
