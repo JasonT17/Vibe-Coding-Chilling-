@@ -10,10 +10,12 @@ function App() {
   const { darkMode } = useDarkMode();
   
   return (
-    <div className={`min-h-screen transition-colors duration-300 ${darkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
+    <div className={`min-h-screen transition-colors duration-300 ${darkMode ? 'bg-black' : 'bg-gray-50'}`}>
       <Header />
       
-      <main className="container mx-auto px-3 md:px-4 py-4 md:py-6 space-y-4 md:space-y-6">
+      <main className={`container mx-auto px-3 md:px-4 py-4 md:py-6 space-y-4 md:space-y-6 ${
+        darkMode ? 'bg-black' : ''
+      }`}>
         {/* Statistics Cards */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
           {statsData.map((stat) => (
@@ -37,7 +39,7 @@ function App() {
 
       {/* Footer */}
       <footer className={`border-t mt-8 md:mt-12 transition-colors duration-300 ${
-        darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
+        darkMode ? 'bg-gray-900 border-gray-800' : 'bg-white border-gray-200'
       }`}>
         <div className="container mx-auto px-3 md:px-4 py-4 md:py-6">
           <p className={`text-center text-xs md:text-sm transition-colors ${

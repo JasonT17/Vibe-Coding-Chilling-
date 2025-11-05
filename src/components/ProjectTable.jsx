@@ -46,7 +46,7 @@ const ProjectTable = ({ projects }) => {
 
   return (
     <div className={`rounded-lg shadow-sm overflow-hidden transition-colors duration-300 ${
-      darkMode ? 'bg-gray-800' : 'bg-white'
+      darkMode ? 'bg-gray-900 border border-gray-800' : 'bg-white'
     }`}>
       <div className={`p-4 md:p-6 border-b transition-colors ${
         darkMode ? 'border-gray-700' : 'border-gray-200'
@@ -202,7 +202,7 @@ const ProjectTable = ({ projects }) => {
       )}
 
       <div className={`px-6 py-4 border-t transition-colors ${
-        darkMode ? 'border-gray-700 bg-gray-800/50' : 'border-gray-200 bg-gray-50'
+        darkMode ? 'border-gray-800 bg-black/30' : 'border-gray-200 bg-gray-50'
       }`}>
         <p className={`text-sm ${
           darkMode ? 'text-gray-400' : 'text-gray-600'
