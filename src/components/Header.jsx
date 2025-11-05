@@ -1,8 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
-import { Building2, Search, Bell, User, UserCircle, Settings, Palette, LogOut } from 'lucide-react';
+import { Building2, Search, Bell, User, UserCircle, Settings, Moon, LogOut } from 'lucide-react';
 
 const Header = () => {
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
   const userMenuRef = useRef(null);
 
   const navItems = [
@@ -82,13 +83,28 @@ const Header = () => {
                     <span>Cài đặt</span>
                   </button>
                   
-                  <button
-                    onClick={() => setShowUserMenu(false)}
-                    className="w-full px-4 py-2.5 text-left text-sm text-gray-700 hover:bg-gray-100 flex items-center space-x-3 transition-colors"
-                  >
-                    <Palette className="h-4 w-4 text-gray-500" />
-                    <span>Giao diện</span>
-                  </button>
+                  <div className="w-full px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100 flex items-center justify-between transition-colors">
+                    <div className="flex items-center space-x-3">
+                      <Moon className="h-4 w-4 text-gray-500" />
+                      <span>Dark mode</span>
+                    </div>
+                    {/* Toggle Switch */}
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setDarkMode(!darkMode);
+                      }}
+                      className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${
+                        darkMode ? 'bg-green-600' : 'bg-gray-300'
+                      }`}
+                    >
+                      <span
+                        className={`inline-block h-3.5 w-3.5 transform rounded-full bg-white transition-transform ${
+                          darkMode ? 'translate-x-5' : 'translate-x-1'
+                        }`}
+                      />
+                    </button>
+                  </div>
                   
                   <div className="border-t border-gray-200 my-1"></div>
                   
