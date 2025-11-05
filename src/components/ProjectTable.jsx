@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { ChevronDown, ChevronUp, Filter } from 'lucide-react';
+import { useDarkMode } from '../context/DarkModeContext';
 
 const ProjectTable = ({ projects }) => {
+  const { darkMode } = useDarkMode();
   const [sortField, setSortField] = useState(null);
   const [sortDirection, setSortDirection] = useState('asc');
   const [filterText, setFilterText] = useState('');
@@ -43,10 +45,16 @@ const ProjectTable = ({ projects }) => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-      <div className="p-4 md:p-6 border-b border-gray-200">
+    <div className={`rounded-lg shadow-sm overflow-hidden transition-colors duration-300 ${
+      darkMode ? 'bg-gray-800' : 'bg-white'
+    }`}>
+      <div className={`p-4 md:p-6 border-b transition-colors ${
+        darkMode ? 'border-gray-700' : 'border-gray-200'
+      }`}>
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-0 mb-4">
-          <h3 className="text-base md:text-lg font-semibold text-gray-800">
+          <h3 className={`text-base md:text-lg font-semibold transition-colors ${
+            darkMode ? 'text-gray-200' : 'text-gray-800'
+          }`}>
             Bảng dữ liệu chi tiết
           </h3>
           <div className="relative w-full md:w-auto">
@@ -55,7 +63,9 @@ const ProjectTable = ({ projects }) => {
               placeholder="Tìm kiếm dự án..."
               value={filterText}
               onChange={(e) => setFilterText(e.target.value)}
-              className="w-full md:w-auto pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-xs md:text-sm"
+              className={`w-full md:w-auto pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-xs md:text-sm transition-colors ${
+                darkMode ? 'bg-gray-700 border-gray-600 text-gray-200 placeholder-gray-400' : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
+              }`}
             />
             <Filter className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
           </div>
@@ -104,33 +114,53 @@ const ProjectTable = ({ projects }) => {
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200">
+          <tbody className={`divide-y transition-colors ${
+            darkMode ? 'divide-gray-700' : 'divide-gray-200'
+          }`}>
             {filteredProjects.map((project, index) => (
-              <tr key={project.id} className="hover:bg-gray-50 transition-colors">
-                <td className="px-2 py-2 whitespace-nowrap text-xs text-gray-900">
+              <tr key={project.id} className={`transition-colors ${
+                darkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-50'
+              }`}>
+                <td className={`px-2 py-2 whitespace-nowrap text-xs ${
+                  darkMode ? 'text-gray-300' : 'text-gray-900'
+                }`}>
                   {index + 1}
                 </td>
-                <td className="px-2 py-2 text-xs text-gray-900">
+                <td className={`px-2 py-2 text-xs ${
+                  darkMode ? 'text-gray-300' : 'text-gray-900'
+                }`}>
                   {project.name}
                 </td>
-                <td className="px-2 py-2 text-xs text-gray-600">
+                <td className={`px-2 py-2 text-xs ${
+                  darkMode ? 'text-gray-400' : 'text-gray-600'
+                }`}>
                   {project.contractor}
                 </td>
-                <td className="px-2 py-2 whitespace-nowrap text-xs text-gray-900">
+                <td className={`px-2 py-2 whitespace-nowrap text-xs ${
+                  darkMode ? 'text-gray-300' : 'text-gray-900'
+                }`}>
                   {project.budget}
                 </td>
-                <td className="px-2 py-2 whitespace-nowrap text-xs text-gray-900">
+                <td className={`px-2 py-2 whitespace-nowrap text-xs ${
+                  darkMode ? 'text-gray-300' : 'text-gray-900'
+                }`}>
                   {project.spent}
                 </td>
-                <td className="px-2 py-2 whitespace-nowrap text-xs text-gray-600">
+                <td className={`px-2 py-2 whitespace-nowrap text-xs ${
+                  darkMode ? 'text-gray-400' : 'text-gray-600'
+                }`}>
                   {project.startDate}
                 </td>
-                <td className="px-2 py-2 whitespace-nowrap text-xs text-gray-600">
+                <td className={`px-2 py-2 whitespace-nowrap text-xs ${
+                  darkMode ? 'text-gray-400' : 'text-gray-600'
+                }`}>
                   {project.endDate}
                 </td>
                 <td className="px-2 py-2 whitespace-nowrap">
                   <div className="flex items-center space-x-1">
-                    <div className="bg-gray-200 rounded-full h-2 w-20">
+                    <div className={`rounded-full h-2 w-20 ${
+                      darkMode ? 'bg-gray-600' : 'bg-gray-200'
+                    }`}>
                       <div
                         className={`h-2 rounded-full transition-all ${
                           project.status === 'over' ? 'bg-red-500' : 'bg-green-500'
@@ -164,13 +194,19 @@ const ProjectTable = ({ projects }) => {
       </div>
 
       {filteredProjects.length === 0 && (
-        <div className="text-center py-12 text-gray-500">
+        <div className={`text-center py-12 ${
+          darkMode ? 'text-gray-400' : 'text-gray-500'
+        }`}>
           Không tìm thấy dự án nào
         </div>
       )}
 
-      <div className="px-6 py-4 border-t border-gray-200 bg-gray-50">
-        <p className="text-sm text-gray-600">
+      <div className={`px-6 py-4 border-t transition-colors ${
+        darkMode ? 'border-gray-700 bg-gray-800/50' : 'border-gray-200 bg-gray-50'
+      }`}>
+        <p className={`text-sm ${
+          darkMode ? 'text-gray-400' : 'text-gray-600'
+        }`}>
           Hiển thị <span className="font-medium">{filteredProjects.length}</span> trên{' '}
           <span className="font-medium">{projects.length}</span> dự án
         </p>

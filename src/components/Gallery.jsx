@@ -1,9 +1,16 @@
 import { Image } from 'lucide-react';
+import { useDarkMode } from '../context/DarkModeContext';
 
 const Gallery = ({ images }) => {
+  const { darkMode } = useDarkMode();
+  
   return (
-    <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm">
-      <h3 className="text-base md:text-lg font-semibold text-gray-800 mb-3 md:mb-4">
+    <div className={`rounded-lg p-4 md:p-6 shadow-sm transition-colors duration-300 ${
+      darkMode ? 'bg-gray-800' : 'bg-white'
+    }`}>
+      <h3 className={`text-base md:text-lg font-semibold mb-3 md:mb-4 transition-colors ${
+        darkMode ? 'text-gray-200' : 'text-gray-800'
+      }`}>
         Hình ảnh công trình
       </h3>
       

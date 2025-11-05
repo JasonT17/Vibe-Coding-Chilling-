@@ -4,10 +4,13 @@ import ProgressChart from './components/ProgressChart';
 import Gallery from './components/Gallery';
 import ProjectTable from './components/ProjectTable';
 import { statsData, chartData, projectsData, galleryImages } from './data/mockData';
+import { useDarkMode } from './context/DarkModeContext';
 
 function App() {
+  const { darkMode } = useDarkMode();
+  
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className={`min-h-screen transition-colors duration-300 ${darkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
       <Header />
       
       <main className="container mx-auto px-3 md:px-4 py-4 md:py-6 space-y-4 md:space-y-6">
@@ -33,9 +36,13 @@ function App() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-white border-t border-gray-200 mt-8 md:mt-12">
+      <footer className={`border-t mt-8 md:mt-12 transition-colors duration-300 ${
+        darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
+      }`}>
         <div className="container mx-auto px-3 md:px-4 py-4 md:py-6">
-          <p className="text-center text-xs md:text-sm text-gray-600">
+          <p className={`text-center text-xs md:text-sm transition-colors ${
+            darkMode ? 'text-gray-400' : 'text-gray-600'
+          }`}>
             © 2025 W's Dashboard. All rights reserved.
           </p>
         </div>

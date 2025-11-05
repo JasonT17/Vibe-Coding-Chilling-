@@ -1,9 +1,10 @@
 import { useState, useRef, useEffect } from 'react';
 import { Building2, Search, Bell, User, UserCircle, Settings, Moon, LogOut } from 'lucide-react';
+import { useDarkMode } from '../context/DarkModeContext';
 
 const Header = () => {
   const [showUserMenu, setShowUserMenu] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
+  const { darkMode, toggleDarkMode } = useDarkMode();
   const userMenuRef = useRef(null);
 
   const navItems = [
@@ -92,7 +93,7 @@ const Header = () => {
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
-                        setDarkMode(!darkMode);
+                        toggleDarkMode();
                       }}
                       className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${
                         darkMode ? 'bg-green-600' : 'bg-gray-300'
