@@ -176,20 +176,28 @@ const ProjectTable = ({ projects }) => {
                         style={{ width: `${Math.min(project.progress, 100)}%` }}
                       />
                     </div>
-                    <span className={`text-[10px] font-medium ${
-                      project.status === 'over' ? 'text-red-600' : 'text-green-600'
+                    <span className={`text-[10px] font-medium transition-colors ${
+                      darkMode 
+                        ? (project.status === 'over' ? 'text-red-400' : 'text-gray-400')
+                        : (project.status === 'over' ? 'text-red-600' : 'text-green-600')
                     }`}>
                       {project.progress}%
                     </span>
                   </div>
                 </td>
                 <td className="px-2 py-2 whitespace-nowrap">
-                  <span className={`inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium ${
-                    project.status === 'over' 
-                      ? 'bg-red-100 text-red-800' 
-                      : project.progress >= 90
-                      ? 'bg-green-100 text-green-800'
-                      : 'bg-blue-100 text-blue-800'
+                  <span className={`inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium transition-colors ${
+                    darkMode 
+                      ? (project.status === 'over' 
+                          ? 'bg-red-900/30 text-red-300' 
+                          : project.progress >= 90
+                          ? 'bg-green-900/30 text-green-300'
+                          : 'bg-blue-900/30 text-blue-300')
+                      : (project.status === 'over' 
+                          ? 'bg-red-100 text-red-800' 
+                          : project.progress >= 90
+                          ? 'bg-green-100 text-green-800'
+                          : 'bg-blue-100 text-blue-800')
                   }`}>
                     {project.status === 'over' ? 'Vượt' : 
                      project.progress >= 90 ? 'Hoàn thành' : 'Đang làm'}
