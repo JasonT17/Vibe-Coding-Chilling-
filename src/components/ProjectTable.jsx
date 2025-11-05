@@ -74,19 +74,25 @@ const ProjectTable = ({ projects }) => {
 
       <div className="overflow-x-auto">
         <table className="w-full text-xs">
-          <thead className="bg-green-700 text-white">
+          <thead className={`text-white transition-colors ${
+            darkMode ? 'bg-gray-800' : 'bg-green-700'
+          }`}>
             <tr>
               <th className="px-2 py-2 text-left text-[10px] font-semibold uppercase">
                 STT
               </th>
               <th 
-                className="px-2 py-2 text-left text-[10px] font-semibold uppercase cursor-pointer hover:bg-green-600"
+                className={`px-2 py-2 text-left text-[10px] font-semibold uppercase cursor-pointer transition-colors ${
+                  darkMode ? 'hover:bg-gray-700' : 'hover:bg-green-600'
+                }`}
                 onClick={() => handleSort('name')}
               >
                 CÔNG VIỆC/HẠNG MỤC <SortIcon field="name" />
               </th>
               <th 
-                className="px-2 py-2 text-left text-[10px] font-semibold uppercase cursor-pointer hover:bg-green-600"
+                className={`px-2 py-2 text-left text-[10px] font-semibold uppercase cursor-pointer transition-colors ${
+                  darkMode ? 'hover:bg-gray-700' : 'hover:bg-green-600'
+                }`}
                 onClick={() => handleSort('contractor')}
               >
                 NHÀ THẦU <SortIcon field="contractor" />
@@ -104,7 +110,9 @@ const ProjectTable = ({ projects }) => {
                 NGÀY KẾT THÚC
               </th>
               <th 
-                className="px-2 py-2 text-left text-[10px] font-semibold uppercase cursor-pointer hover:bg-green-600"
+                className={`px-2 py-2 text-left text-[10px] font-semibold uppercase cursor-pointer transition-colors ${
+                  darkMode ? 'hover:bg-gray-700' : 'hover:bg-green-600'
+                }`}
                 onClick={() => handleSort('progress')}
               >
                 TIẾN ĐỘ <SortIcon field="progress" />

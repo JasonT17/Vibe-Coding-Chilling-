@@ -18,7 +18,9 @@ const Gallery = ({ images }) => {
         {images.map((image) => (
           <div
             key={image.id}
-            className={`${image.color} rounded-lg aspect-video flex items-center justify-center hover:opacity-90 transition-opacity cursor-pointer`}
+            className={`rounded-lg aspect-video flex items-center justify-center hover:opacity-90 transition-all cursor-pointer ${
+              darkMode ? 'bg-gray-800' : image.color
+            }`}
           >
             <Image className="h-8 w-8 md:h-12 md:w-12 text-white opacity-50" />
           </div>
