@@ -110,7 +110,7 @@ const Filters = () => {
           </h3>
         </div>
         <ChevronDown className={`h-5 w-5 transition-transform ${
-          isExpanded ? 'rotate-180' : ''
+          isExpanded ? '' : 'rotate-180'
         } ${darkMode ? 'text-gray-400' : 'text-gray-600'}`} />
       </div>
 
