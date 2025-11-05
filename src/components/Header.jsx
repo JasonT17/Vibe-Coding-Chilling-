@@ -1,6 +1,10 @@
-import { Building2, Search, Bell, User } from 'lucide-react';
+import { useState, useRef, useEffect } from 'react';
+import { Building2, Search, Bell, User, UserCircle, Settings, Palette, LogOut } from 'lucide-react';
 
 const Header = () => {
+  const [showUserMenu, setShowUserMenu] = useState(false);
+  const userMenuRef = useRef(null);
+
   const navItems = [
     "TỔNG QUAN",
     "CÔNG VIỆC THIẾT KẾ",
@@ -8,6 +12,18 @@ const Header = () => {
     "KẾ HOẠCH VÀ TIẾN ĐỘ CÔNG VIỆC",
     "QUẢN LÝ DỰ TOÁN VÀ THANH TOÁN"
   ];
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
+        setShowUserMenu(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   return (
     <header className="bg-green-700 text-white">
@@ -37,9 +53,55 @@ const Header = () => {
             <button className="p-2 hover:bg-green-600 rounded-lg transition-colors">
               <Bell className="h-4 w-4 md:h-5 md:w-5" />
             </button>
-            <button className="p-2 hover:bg-green-600 rounded-lg transition-colors">
-              <User className="h-4 w-4 md:h-5 md:w-5" />
-            </button>
+            
+            {/* User Dropdown */}
+            <div className="relative" ref={userMenuRef}>
+              <button 
+                onClick={() => setShowUserMenu(!showUserMenu)}
+                className="p-2 hover:bg-green-600 rounded-lg transition-colors"
+              >
+                <User className="h-4 w-4 md:h-5 md:w-5" />
+              </button>
+
+              {/* Dropdown Menu */}
+              {showUserMenu && (
+                <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg py-2 z-50 border border-gray-200">
+                  <button
+                    onClick={() => setShowUserMenu(false)}
+                    className="w-full px-4 py-2.5 text-left text-sm text-gray-700 hover:bg-gray-100 flex items-center space-x-3 transition-colors"
+                  >
+                    <UserCircle className="h-4 w-4 text-gray-500" />
+                    <span>Thông tin cá nhân</span>
+                  </button>
+                  
+                  <button
+                    onClick={() => setShowUserMenu(false)}
+                    className="w-full px-4 py-2.5 text-left text-sm text-gray-700 hover:bg-gray-100 flex items-center space-x-3 transition-colors"
+                  >
+                    <Settings className="h-4 w-4 text-gray-500" />
+                    <span>Cài đặt</span>
+                  </button>
+                  
+                  <button
+                    onClick={() => setShowUserMenu(false)}
+                    className="w-full px-4 py-2.5 text-left text-sm text-gray-700 hover:bg-gray-100 flex items-center space-x-3 transition-colors"
+                  >
+                    <Palette className="h-4 w-4 text-gray-500" />
+                    <span>Giao diện</span>
+                  </button>
+                  
+                  <div className="border-t border-gray-200 my-1"></div>
+                  
+                  <button
+                    onClick={() => setShowUserMenu(false)}
+                    className="w-full px-4 py-2.5 text-left text-sm text-red-600 hover:bg-red-50 flex items-center space-x-3 transition-colors"
+                  >
+                    <LogOut className="h-4 w-4 text-red-600" />
+                    <span>Đăng xuất</span>
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
